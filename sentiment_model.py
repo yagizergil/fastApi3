@@ -14,7 +14,7 @@ from sklearn.exceptions import NotFittedError
 nltk.download('punkt')
 nltk.download('stopwords')
 
-conn = sqlite3.connect('model\sentiment_analysis2.db')
+conn = sqlite3.connect('sentiment_analysis2.db')
 c = conn.cursor()
 
 c.execute('''CREATE TABLE IF NOT EXISTS sentiment_analysis (
@@ -29,13 +29,13 @@ conn.commit()
 conn.close()
 
 async def save_sentiment_to_database(text, prediction, proba):
-    async with aiosqlite.connect('model\sentiment_analysis2.db') as conn:
+    async with aiosqlite.connect('sentiment_analysis2.db') as conn:
         c = await conn.cursor()
         await c.execute('INSERT INTO sentiment_analysis (text, prediction, proba) VALUES (?, ?, ?)', (text, prediction, proba))
         await conn.commit()
 
 def get_sentiment_data():
-    conn = sqlite3.connect('model/sentiment_analysis2.db')
+    conn = sqlite3.connect('sentiment_analysis2.db')
     c = conn.cursor()
 
     data = c.execute('SELECT * FROM sentiment_analysis').fetchall()
@@ -54,10 +54,10 @@ def preprocess_text(text):
     return " ".join(words)
 
 def load_lr_model():
-    return joblib.load('model/lr_model.pkl')
+    return joblib.load('lr_model.pkl')
 
 def load_vectorizer():
-    return joblib.load('model/vectorizer.pkl')
+    return joblib.load('vectorizer.pkl')
 
 def predict_sentiment(text, new_text_vector=None):
     if new_text_vector is None:

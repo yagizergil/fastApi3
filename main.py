@@ -28,7 +28,7 @@ app.add_middleware(
 
 
 
-vectorizer = joblib.load('model/vectorizer.pkl')
+vectorizer = joblib.load('vectorizer.pkl')
 class SentimentInput(BaseModel):
     text: str
 
